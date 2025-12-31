@@ -6,7 +6,7 @@ import ArticleDetail from './components/ArticleDetail';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 text-gray-900">
+      <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<ArticleList />} />
           <Route path="/article/:id" element={<ArticleDetail />} />
