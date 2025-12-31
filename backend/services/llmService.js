@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const enhanceContent = async (originalArticle, referenceArticles) => {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
         let referencesText = '';
         referenceArticles.forEach((ref, index) => {
@@ -33,6 +33,8 @@ const enhanceContent = async (originalArticle, referenceArticles) => {
         3. Maintain the original core message but improve flow and depth.
         4. At the very bottom, add a section called "References" and list the reference articles with their links properly cited.
         5. Return ONLY the new article content in Markdown format. Do not include introductory text like "Here is the rewritten article".
+        6. Make its formatting, content similar to the Reference Articles whose link are provided.
+        7. Keep the enhanced article concise (maximum 500-600 words) to prevent exceeding API token limits.
         
         Enhanced Article:
         `;

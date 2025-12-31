@@ -62,8 +62,8 @@ const ArticleDetail = () => {
                     </div>
                 ) : (
                     <div>
-                        <div className="prose max-w-none whitespace-pre-wrap text-gray-800 mb-8">
-                            {article.updatedContent}
+                        <div className="prose max-w-none text-gray-800 mb-8">
+                            <ReactMarkdown>{article.updatedContent}</ReactMarkdown>
                         </div>
 
                         {article.referenceLinks && article.referenceLinks.length > 0 && (

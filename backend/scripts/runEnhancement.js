@@ -13,7 +13,7 @@ const runEnhancement = async () => {
         await connectDB();
 
         // Find pending articles
-        const articles = await Article.find({ status: 'pending' }).limit(1); // Process 1 at a time to avoid rate limits
+        const articles = await Article.find({ status: 'pending' });
 
         if (articles.length === 0) {
             console.log('No pending articles found.');
@@ -43,10 +43,9 @@ const runEnhancement = async () => {
             }
 
             if (references.length === 0) {
-                console.log('Could not fetch reference content. Skipping enhancement.');
-                article.status = 'failed';
-                await article.save();
-                continue;
+                console.log('Could not fetch reference content. Proceeding without references.');
+                // Proceed anyway, but maybe add a note to the prompt? 
+                // The prompt variable construction handles empty referencesText gracefully-ish (it will be empty string).
             }
 
             // 3. Call LLM

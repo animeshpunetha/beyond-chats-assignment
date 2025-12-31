@@ -1,36 +1,27 @@
-const axios = require('axios');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const Article = require('./models/Article');
 
-const verify = async () => {
-    console.log('Starting verification...');
+dotenv.config();
 
-    // 1. Check Manifest
+const verifyFix = async () => {
     try {
-        const manifestRes = await axios.get('http://localhost:5173/manifest.webmanifest');
-        if (manifestRes.status === 200) {
-            console.log('✅ Manifest is accessible.');
+        await mongoose.connect(process.env.MONGO_URI);
+        const article = await Article.findOne({ status: 'completed' });
+        if (article && article.updatedContent) {
+            console.log('SUCCESS: Article enhanced.');
+            console.log('Title:', article.title);
+            console.log('Enhanced Content Length:', article.updatedContent.length);
         } else {
-            console.error('❌ Manifest returned status:', manifestRes.status);
+            console.log('FAILURE: No completed article found.');
+            const failed = await Article.findOne({ status: 'failed' });
+            if (failed) console.log('Found failed article:', failed.title);
         }
+        process.exit(0);
     } catch (err) {
-        console.error('❌ Failed to fetch manifest:', err.message);
-    }
-
-    // 2. Trigger Scrape
-    try {
-        console.log('Triggering scrape...');
-        const scrapeRes = await axios.post('http://localhost:5000/api/articles/scrape');
-        if (scrapeRes.status === 201) {
-            console.log('✅ Scrape successful.');
-            console.log('Response:', scrapeRes.data);
-        } else {
-            console.error('❌ Scrape returned status:', scrapeRes.status);
-        }
-    } catch (err) {
-        console.error('❌ Scrape failed:', err.message);
-        if (err.response) {
-            console.error('Error data:', err.response.data);
-        }
+        console.error(err);
+        process.exit(1);
     }
 };
 
-verify();
+verifyFix();
