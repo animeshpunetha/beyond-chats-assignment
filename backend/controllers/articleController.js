@@ -1,5 +1,6 @@
 const Article = require('../models/Article');
 const { fetchArticles } = require('../services/scraperService');
+const { processArticle } = require('../services/processService');
 
 // @desc Scrape and save articles
 // @route POST /api/articles/scrape
@@ -20,11 +21,15 @@ const scrapeAndSaveArticles = async (req, res) => {
                     status: 'pending'
                 });
                 savedArticles.push(article);
+
+                // Trigger automatic enhancement in background
+                // We do NOT await this, so the UI returns quickly.
+                processArticle(article).catch(err => console.error('Background process error:', err));
             }
         }
 
         res.status(201).json({
-            message: `Scraped and saved ${savedArticles.length} new articles.`,
+            message: `Scraped and saved ${savedArticles.length} new articles. Enhancement started in background.`,
             articles: savedArticles
         });
     } catch (error) {
