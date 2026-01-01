@@ -65,6 +65,7 @@ cd beyondchats-assignment
 ## Documentation
 - [**API Documentation**](docs/API.md): Detailed endpoints and usage.
 - [**Architecture Overview**](docs/ARCHITECTURE.md): System components and data flow explanation.
+- [**Hosting Guide**](docs/HOSTING.md): Instructions for deploying for free.
 
 ## Features
 - **Phase 1**: Scrapes 5 oldest articles from BeyondChats blogs.
