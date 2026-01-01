@@ -3,13 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Loader2, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 
+import API_URL from '../config';
+
 const ArticleList = () => {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchArticles = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/articles');
+            const { data } = await axios.get(`${API_URL}/api/articles`);
             setArticles(data);
         } catch (error) {
             console.error('Error fetching articles:', error);
@@ -21,7 +23,7 @@ const ArticleList = () => {
     const handleScrape = async () => {
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/articles/scrape');
+            await axios.post(`${API_URL}/api/articles/scrape`);
             fetchArticles();
         } catch (error) {
             alert('Scraping failed');

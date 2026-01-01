@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, ExternalLink, Sparkles, FileText, ChevronRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import API_URL from '../config';
 
 const ArticleDetail = () => {
     const { id } = useParams();
@@ -12,7 +13,7 @@ const ArticleDetail = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5000/api/articles/${id}`);
+                const { data } = await axios.get(`${API_URL}/api/articles/${id}`);
                 setArticle(data);
                 if (data.status === 'completed' && data.updatedContent) {
                     setActiveTab('enhanced');
