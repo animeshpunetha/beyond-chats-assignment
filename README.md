@@ -1,5 +1,4 @@
-# BeyondChats Assignment - Full Stack Developer Intern
-
+# BeyondChats Enhancer
 ## Project Overview
 This project is a submission for the BeyondChats Full Stack Developer Intern assignment. It consists of a Node.js backend for scraping and AI enhancement, and a React frontend for displaying the articles.
 
